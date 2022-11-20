@@ -1,0 +1,11 @@
+---
+# tasks file for ftp_role
+- name: install
+  yum:
+   name: vsftpd
+   state: installed
+- name: start service
+  service:
+   name: vsftpd
+   state: started
+   enabled: yes
