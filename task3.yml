@@ -1,0 +1,24 @@
+---
+- hosts: remote
+  gather_facts: false
+  tasks:
+  - name: Create user and password
+    remote_user: admin1
+    become: yes
+    ansible.builtin.user:
+      name: user1
+      generate_ssh_key: yes
+      ssh_key_bits: 2048
+      ssh_key_file: .ssh/id_rsa
+  - name: Fetch file id_rsa.pub
+    remote_user: admin1
+    become: yes
+    ansible.builtin.fetch:
+      src: /home/user1/.ssh/id_rsa.pub
+      dest: /etc/ansible/playbooks/secret/id_rsa_user1.pub
+      flat: yes
+- hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Encrypt file id_rsa
+    command: 'ansible-vault encrypt --vault-password-file /etc/ansible/playbooks/secret/password.txt /etc/ansible/playbooks/secret/id_rsa_user1.pub'

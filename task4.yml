@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Postfix install
+    ansible.builtin.yum:
+     name: docker
+     state: latest
+    tags: "init postfix"
+  - name: Postfix uninstall
+    ansible.builtin.yum:
+     name: postfix
+     state: absent
+    tags: "drop postfix"		
