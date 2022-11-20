@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: MariaDB start
+    command: 'systemctl start mariadb.service'		
