@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  gather_facts: false
+  become: yes
+  roles:
+  - nginx_php_fpm_root

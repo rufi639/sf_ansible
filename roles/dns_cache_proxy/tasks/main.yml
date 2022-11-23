@@ -1,0 +1,21 @@
+---
+# tasks file for dns_cache_proxy
+- name: install
+  ansible.builtin.yum:
+   name: dnsmasq
+   state: installed
+- name: copy resolv.dnsmasq
+  copy: 
+    src: resolv.dnsmasq
+    dest: /etc/resolv.dnsmasq
+    force: yes
+- name: copy dnsmasq.conf 
+  copy: 
+    src: dnsmasq.conf
+    dest: /etc/dnsmasq.conf
+    force: yes
+- name: start service
+  ansible.builtin.systemd:
+    name: dnsmasq
+    state: started
+    enabled: yes

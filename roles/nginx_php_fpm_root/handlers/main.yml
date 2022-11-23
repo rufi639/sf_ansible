@@ -1,0 +1,12 @@
+---
+# handlers file for nginx_php_fpm
+- name: Restart service nginx
+  ansible.builtin.systemd:
+    state: restarted
+    daemon_reload: yes
+    name: nginx
+- name: Restart service php-fpm
+  ansible.builtin.systemd:
+    state: restarted
+    daemon_reload: yes
+    name: php-fpm

@@ -1,0 +1,33 @@
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Create group
+    become: yes
+    ansible.builtin.group:
+      name: superusers
+      state: present
+  - name: Add sudo group
+    become: yes
+    ansible.builtin.lineinfile:
+      path: /etc/sudoers
+      state: present
+      regexp: '^%superusers'
+      line: '%superusers ALL=(ALL) NOPASSWD: ALL'
+      validate: /usr/sbin/visudo -cf %s      
+  - name: Create user2
+    become: yes
+    ansible.builtin.user:
+      name: user2
+      state: present
+      groups: superusers
+      ssh_key_bits: 2048
+      ssh_key_file: .ssh/id_rsa
+  - name: Create user3
+    become: yes
+    ansible.builtin.user:
+      name: user3
+      state: present
+      groups: superusers
+      ssh_key_bits: 2048
+      ssh_key_file: .ssh/id_rsa
