@@ -1,0 +1,21 @@
+---
+# tasks file for http
+- name: install nginx
+  ansible.builtin.yum:
+    name: 
+      - nginx
+    state: installed
+- name: start service nginx
+  ansible.builtin.systemd:
+    name: nginx
+    state: started
+    enabled: yes 
+- name: copy config nginx
+  ansible.builtin.copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    mode: '0644'
+    backup: true
+    force: true
+  notify:
+  - Restart service nginx

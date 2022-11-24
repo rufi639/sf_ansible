@@ -1,0 +1,8 @@
+---
+- hosts: remote
+  remote_user: admin1
+  gather_facts: true
+  become: yes
+  roles:
+  - users
+  - php

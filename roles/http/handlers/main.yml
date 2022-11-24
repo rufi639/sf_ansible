@@ -1,0 +1,7 @@
+---
+# handlers file for http
+- name: Restart service nginx
+  ansible.builtin.systemd:
+    state: restarted
+    daemon_reload: yes
+    name: nginx

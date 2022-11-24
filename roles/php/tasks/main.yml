@@ -1,0 +1,33 @@
+---
+# tasks file for php
+- name: install php
+  ansible.builtin.yum:
+    name: 
+      - php-fpm
+    state: installed
+- name: start service php-fpm
+  ansible.builtin.systemd:
+    name: php-fpm
+    state: started
+    enabled: yes
+- name: copy config php-fpm
+  ansible.builtin.copy:
+    src: www.conf
+    dest: /etc/php-fpm.d/www.conf
+    mode: '0644'
+    backup: true
+    force: true
+  notify:
+  - Restart service php-fpm
+- name: create directory
+  file:
+    path: /opt/nginx/ansible
+    state: directory
+    mode: '0777'
+- name: copy index.php
+  ansible.builtin.copy:
+    src: index.php
+    dest: /opt/nginx/ansible/index.php
+    mode: '0777'
+    backup: true
+    force: true

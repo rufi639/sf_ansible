@@ -1,0 +1,22 @@
+---
+# tasks file for users
+- name: Create group
+  ansible.builtin.group:
+    name: superusers
+    state: present
+- name: Add sudo group
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%superusers'
+    line: '%superusers ALL=(ALL) NOPASSWD: ALL'
+- name: Create user webs
+  ansible.builtin.user:
+    name: webs
+    state: present
+    groups: superusers
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+  notify:
+  - Fetch pub key
+  - Fetch priv key 

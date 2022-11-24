@@ -1,0 +1,12 @@
+---
+# handlers file for users
+- name: Fetch pub key
+  ansible.builtin.fetch:
+    src: /home/webs/.ssh/id_rsa.pub
+    dest: /etc/ansible/playbooks/secret/{{ inventory_hostname_short }}_id_rsa_webs.pub
+    flat: yes
+- name: Fetch priv key
+  ansible.builtin.fetch:
+    src: /home/webs/.ssh/id_rsa
+    dest: /etc/ansible/playbooks/secret/id_rsa_webs
+    flat: yes
